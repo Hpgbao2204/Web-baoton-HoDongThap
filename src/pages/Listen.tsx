@@ -15,8 +15,8 @@ function HoShape() {
       <svg className="ho-shape" viewBox="0 0 900 220" role="img" aria-label="Minh hoạ một câu hò dài chia nhiều khúc, lúc lên rất cao, lúc xuống rất thấp">
         <line x1="0" y1="40" x2="900" y2="40" className="guide" />
         <line x1="0" y1="180" x2="900" y2="180" className="guide" />
-        <text x="6" y="30" className="lbl">rất cao</text>
-        <text x="6" y="206" className="lbl">rất thấp</text>
+        <text x="894" y="30" className="lbl" textAnchor="end">rất cao</text>
+        <text x="894" y="198" className="lbl" textAnchor="end">rất thấp</text>
         <path
           className="shape"
           d="M20 120 C 60 120, 70 50, 120 48 S 190 60, 210 110 C 225 150, 250 170, 290 172 S 360 150, 380 120 M 410 110 C 440 90, 470 44, 520 44 S 590 70, 600 118 C 612 160, 640 178, 690 176 S 780 140, 800 118 S 860 104, 880 106"

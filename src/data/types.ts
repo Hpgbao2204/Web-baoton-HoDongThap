@@ -37,6 +37,8 @@ export interface Artist {
   /** Lời kể được báo chí thuật lại (không phải trích nguyên văn nếu `paraphrase`). */
   quote?: { text: string; by: string; paraphrase?: boolean }
   photo?: string
+  /** Chữ hiện trên chân dung minh hoạ khi chưa có ảnh. */
+  monogram?: string
   /** Nhóm để sắp xếp: huyền thoại, người truyền nghề, người phục hồi… */
   group: 'huyen-thoai' | 'truyen-nghe' | 'phuc-hoi' | 'lan-toa' | 'nguon-coi'
   featured?: boolean

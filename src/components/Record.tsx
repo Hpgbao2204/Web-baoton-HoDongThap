@@ -14,6 +14,7 @@ export default function Record({ label = 'Hò Đồng Tháp', sub = 'Kim Nhụy 
         <span className="record-disc">
           <span className="record-label">
             <b>{label}</b>
+            <span className="record-hole" />
             <small>{sub}</small>
             <i>45 vòng/phút</i>
           </span>

@@ -8,6 +8,7 @@ import type { Artist } from './types'
 export const artists: Artist[] = [
   {
     id: 'nguoi-dan',
+    monogram: 'Hò',
     name: 'Người dân Đồng Tháp Mười',
     title: 'Những người hò đầu tiên',
     role: 'Chủ thể của di sản',
@@ -28,6 +29,7 @@ export const artists: Artist[] = [
   },
   {
     id: 'kim-nhuy',
+    monogram: 'KN',
     name: 'Kim Nhụy',
     title: 'Nữ hoàng hò Đồng Tháp',
     role: 'Cố nghệ sĩ',
@@ -63,6 +65,7 @@ export const artists: Artist[] = [
   },
   {
     id: 'song-anh',
+    monogram: 'SA',
     name: 'Nguyễn Thị Song Anh',
     title: 'Người nối giọng hò của mẹ',
     role: 'Nghệ nhân · Cố vấn chuyên môn của Nam Âm',
@@ -84,6 +87,7 @@ export const artists: Artist[] = [
   },
   {
     id: 'tran-van-khe',
+    monogram: 'TK',
     name: 'Trần Văn Khê',
     title: 'Người đưa tiếng hò ra thế giới',
     role: 'Giáo sư, Tiến sĩ âm nhạc học',
@@ -103,6 +107,7 @@ export const artists: Artist[] = [
   },
   {
     id: 'cao-van-ly',
+    monogram: 'CL',
     name: 'Cao Văn Lý (Phạm Lý)',
     title: 'Người "ru lại câu hò"',
     role: 'Nhạc sĩ, nhà nghiên cứu âm nhạc dân gian',
@@ -125,6 +130,7 @@ export const artists: Artist[] = [
   },
   {
     id: 'nguyen-kim-cuc',
+    monogram: 'KC',
     name: 'Nguyễn Kim Cúc',
     title: 'Người cùng đi tìm điệu hò',
     role: 'Nhạc sĩ, đồng tác giả đề tài phục hồi',
@@ -137,6 +143,7 @@ export const artists: Artist[] = [
   },
   {
     id: 'anh-dao',
+    monogram: 'AĐ',
     name: 'Anh Đào',
     title: 'Một "cây hò Đồng Tháp"',
     role: 'Ca sĩ',
@@ -149,6 +156,7 @@ export const artists: Artist[] = [
   },
   {
     id: 'cao-thi-thang',
+    monogram: 'CT',
     name: 'Cao Thị Thắng',
     title: 'Giọng hò trên sân khấu hôm nay',
     role: 'Nghệ sĩ Đồng Tháp',
@@ -161,6 +169,7 @@ export const artists: Artist[] = [
   },
   {
     id: 'lu-nhat-vu-le-giang',
+    monogram: 'V&G',
     name: 'Lư Nhất Vũ & Lê Giang',
     title: 'Đôi vợ chồng sưu tầm dân ca',
     role: 'Nhạc sĩ & nhà thơ, nhà nghiên cứu',

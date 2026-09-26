@@ -194,7 +194,7 @@ export default function Home() {
               </>
             }
           />
-          <div className="artist-grid">
+          <div className="artist-grid four">
             {keepers.map((a) => (
               <ArtistCard key={a.id} artist={a} />
             ))}

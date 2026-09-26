@@ -19,7 +19,7 @@ function initials(name: string) {
 }
 
 /** Chân dung minh hoạ khi chưa có ảnh được phép sử dụng: vòm cửa, trăng, sóng nước và chữ cái đầu. */
-export function Portrait({ artist, size = 'md' }: { artist: Pick<Artist, 'name' | 'photo' | 'group'>; size?: 'md' | 'lg' }) {
+export function Portrait({ artist, size = 'md' }: { artist: Pick<Artist, 'name' | 'photo' | 'group' | 'monogram'>; size?: 'md' | 'lg' }) {
   const tilt = useTilt<HTMLDivElement>(7)
   if (artist.photo)
     return (
@@ -30,7 +30,7 @@ export function Portrait({ artist, size = 'md' }: { artist: Pick<Artist, 'name' 
   return (
     <div className={`portrait art g-${artist.group} ${size}`} ref={tilt} aria-hidden="true">
       <span className="p-moon" />
-      <span className="p-initials">{initials(artist.name)}</span>
+      <span className="p-initials">{artist.monogram ?? initials(artist.name)}</span>
       <svg viewBox="0 0 200 90" preserveAspectRatio="none">
         <path d="M0 30 C 30 12, 60 48, 100 30 S 170 12, 200 30 V90 H0Z" className="w1" />
         <path d="M0 52 C 36 36, 70 70, 110 52 S 172 36, 200 52 V90 H0Z" className="w2" />

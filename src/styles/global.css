@@ -1537,16 +1537,26 @@ em.ho,
   }
 }
 .record-label {
-  width: 36%;
+  width: 38%;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(circle, #10151f 0 5%, var(--lotus) 5.5% 100%);
-  display: grid;
-  place-content: center;
+  background: var(--lotus);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  gap: 1px;
+  gap: 2px;
   color: #3a1422;
-  padding: 10%;
+  padding: 8%;
+}
+.record-hole {
+  width: 9%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #10151f;
+  margin: 4% 0;
+  flex: none;
 }
 .record-label b {
   font-family: var(--f-display);
@@ -2360,4 +2370,47 @@ a.source-card:hover {
 .sor-wrap {
   overflow-x: auto;
   padding-bottom: 8px;
+}
+
+.verify-flag {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 0.76rem;
+  color: var(--pending);
+  font-weight: 500;
+  max-width: 60ch;
+}
+.verify-flag svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  margin-top: 2px;
+}
+.artist-grid.four {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+@media (max-width: 1000px) {
+  .artist-grid.four {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 560px) {
+  .artist-grid,
+  .artist-grid.four {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 14px;
+  }
+  .artist-card h3 {
+    font-size: 1.3rem;
+  }
+  .ac-title {
+    font-size: 1rem;
+  }
+  .ac-lead {
+    display: none;
+  }
+  .portrait.art .p-initials {
+    font-size: 2.6rem;
+  }
 }

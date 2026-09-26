@@ -408,8 +408,8 @@ export class RiverScene {
     const top = new THREE.Mesh(plank, wood)
     top.position.y = 0.72
     g.add(top)
-    g.position.set(13, 0, -16)
-    g.rotation.y = -0.5
+    g.position.set(-15, 0, -22)
+    g.rotation.y = 0.45
     this.scene.add(g)
   }
 

@@ -2414,3 +2414,17 @@ a.source-card:hover {
     font-size: 2.6rem;
   }
 }
+
+/* nền mờ sau khối chữ hero để luôn đọc rõ trên cảnh 3D */
+.hero-side {
+  position: relative;
+  isolation: isolate;
+}
+.hero-side::before {
+  content: '';
+  position: absolute;
+  inset: -48px -56px;
+  background: radial-gradient(closest-side, var(--scrim), transparent);
+  z-index: -1;
+  pointer-events: none;
+}

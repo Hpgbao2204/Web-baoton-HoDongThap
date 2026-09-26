@@ -18,14 +18,14 @@ export default function Campaign() {
         <RiverCanvas mood={phase.mood} label={`Dòng sông lúc ${phase.when.toLowerCase()}`} />
         <div className="wrap">
           <p className="crumb">
-            <Link to="/">Trang chủ</Link> / Chiến dịch
+            <Link to="/">Trang chủ</Link> / Hoạt động
           </p>
-          <p className="eyebrow">Big Idea · HẸN HÒ</p>
+          <p className="eyebrow">Hoạt động của Nam Âm</p>
           <h1 style={{ fontSize: 'clamp(2.6rem, 6.5vw, 4.8rem)' }}>
-            {site.brand.split(' ').slice(0, 2).join(' ')} <i style={{ color: 'var(--lotus-ink)', fontWeight: 500 }}>Đồng Tháp</i>
+            Hẹn Hò <i style={{ color: 'var(--lotus-ink)', fontWeight: 500 }}>Đồng Tháp</i>
           </h1>
           <p className="lede">
-            "Hẹn" là chờ đợi, là lời mời, là điểm gặp. "Hò" là cất tiếng, gọi và đáp. Ghép lại, di sản trở thành một cuộc hẹn người trẻ có thể bước vào, lắng nghe và đáp lời.
+            Chuỗi hoạt động của {site.brand} mời người trẻ gặp Hò Đồng Tháp ngoài đời thật: nghe câu chuyện, gặp nghệ nhân, rồi cùng ngồi bên bến nước một đêm trăng.
           </p>
           <div className="phase-strip" role="tablist" aria-label="Ba giai đoạn chiến dịch">
             {phases.map((p, i) => (

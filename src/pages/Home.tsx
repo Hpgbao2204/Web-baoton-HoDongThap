@@ -1,25 +1,33 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import RiverCanvas from '../components/RiverCanvas'
-import { AudioPlayer } from '../components/Archive'
+import Record from '../components/Record'
+import { ArtistCard, Cite, FlipCard, SourceCard } from '../components/cards'
 import { HoDivider, SectionHead, TiltBox } from '../components/ui'
 import { IconArrow, IconMute, IconWave } from '../components/icons'
-import { facets, journey, site } from '../data/site'
-import { awareness, postExposure, priorKnowledge, sample } from '../data/research'
-import { phases } from '../data/campaign'
-import { archive } from '../data/archive'
+import { site } from '../data/site'
+import { artists, artistById } from '../data/artists'
+import { chapters, facts, verse } from '../data/heritage'
+import { books, sources } from '../data/sources'
 import { themeMood, useTheme } from '../hooks/useTheme'
 import { useAmbient } from '../hooks/useAmbient'
 import { useReveal } from '../hooks/useMotion'
-import { scopeFor, type Mood } from '../three/moods'
+import { scopeFor } from '../three/moods'
+
+const doors = [
+  { to: '/cau-chuyen', no: 'I', title: 'Câu chuyện', body: 'Từ mùa khẩn hoang đến ngày thành di sản.' },
+  { to: '/nghe-si', no: 'II', title: 'Nghệ sĩ', body: 'Những người đã hò, đã giữ và đã hồi sinh.' },
+  { to: '/nghe-ho', no: 'III', title: 'Nghe Hò', body: 'Nghe gì trong một câu hò trăm năm.' },
+  { to: '/thu-ho', no: 'IV', title: 'Thử Hò', body: 'Trải nghiệm và trắc nghiệm vui.' },
+]
 
 export default function Home() {
   const { theme } = useTheme()
-  const [override, setOverride] = useState<Mood | null>(null)
-  const mood = override ?? themeMood(theme)
+  const mood = themeMood(theme)
   const ambient = useAmbient()
   const root = useReveal<HTMLDivElement>()
-  const featured = archive.find((a) => a.type === 'audio')
+  const kim = artistById('kim-nhuy')!
+  const keepers = artists.filter((a) => ['song-anh', 'cao-van-ly', 'tran-van-khe', 'nguoi-dan'].includes(a.id))
+  const press = sources.filter((s) => ['cand-hay-nhat', 'nhandan-hoi-sinh', 'cantho-ru-lai'].includes(s.id))
 
   return (
     <div ref={root}>
@@ -27,22 +35,20 @@ export default function Home() {
         <RiverCanvas mood={mood} label="Chiếc xuồng trên sông Đồng Tháp Mười, một đường tiếng hò vang sang bờ bên kia" />
         <div className="wrap hero-inner">
           <div className="hero-title">
-            <h1 className="big" aria-label="Hẹn Hò Đồng Tháp">
-              <span>Hẹn</span> <span>Hò</span>
+            <span className="place">Tiếng hò Đồng Tháp</span>
+            <h1 className="big" aria-label="Nam Âm">
+              <span>Nam</span> <span>Âm</span>
             </h1>
-            <span className="place">Đồng Tháp</span>
           </div>
           <div className="hero-side">
             <p className="tagline">{site.tagline}</p>
+            <p style={{ color: 'var(--ink-2)', maxWidth: '46ch' }}>{site.intro}</p>
             <div className="hero-actions">
-              <Link to="/nghe-ho" className="btn btn-primary">
-                Nghe Hò <IconArrow />
+              <Link to="/cau-chuyen" className="btn btn-primary">
+                Nghe câu chuyện <IconArrow />
               </Link>
-              <Link to="/kham-pha" className="btn btn-ghost">
-                Hiểu Hò
-              </Link>
-              <Link to="/thu-ho" className="btn btn-ghost">
-                Cùng Hò
+              <Link to="/nghe-si/kim-nhuy" className="btn btn-ghost">
+                Gặp Kim Nhụy
               </Link>
             </div>
             <div className="hero-meta">
@@ -58,196 +64,185 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Không chỉ là một câu hát */}
-      <section className="section">
-        <span className="vertical-note">Đồng Tháp Mười</span>
+      {/* Lối vào */}
+      <section className="section" style={{ paddingTop: 56 }}>
         <div className="wrap">
-          <SectionHead
-            eyebrow="Một tiếng Hò từ Đồng Tháp Mười"
-            title={
-              <>
-                Không chỉ là <i>một câu hát</i>
-              </>
-            }
-            lede={site.keyMessage}
-          />
-          <div className="facets" data-reveal>
-            {facets.map((f) => (
-              <div className="facet" key={f.word}>
-                <span className="plus" aria-hidden="true">+</span>
-                <span className="word">{f.word}</span>
-                <p>{f.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <HoDivider />
-
-      {/* Nghe thử */}
-      <section className="section">
-        <div className="wrap two-col" style={{ alignItems: 'center' }}>
-          <div className="stack" data-reveal>
-            <p className="eyebrow">Nghe thử</p>
-            <h2>
-              Nghe trước, <i style={{ color: 'var(--lotus-ink)', fontWeight: 500 }}>hiểu sau</i>
-            </h2>
-            <p className="lede">
-              Hò là thực hành bằng giọng. Mỗi bản ghi trên web sẽ đi kèm người hò, nơi ghi, lời hò và người xác minh, để bạn biết mình đang nghe gì.
-            </p>
-            <Link to="/nghe-ho" className="link-arrow">
-              Vào kho tiếng Hò <IconArrow />
-            </Link>
-          </div>
-          <div data-reveal>
-            <AudioPlayer item={featured} />
-          </div>
-        </div>
-      </section>
-
-      {/* Người trẻ biết gì về Hò */}
-      <section className="section alt">
-        <div className="wrap">
-          <SectionHead
-            eyebrow={`Khảo sát ${sample.n} bạn trẻ ${sample.age} tuổi tại ${sample.place}`}
-            title={
-              <>
-                Người trẻ biết gì về <i>Hò Đồng Tháp?</i>
-              </>
-            }
-          />
-          <div className="stat-story">
-            <div className="stack" data-reveal>
-              <div className="big-num">
-                {awareness[0].value}
-                <small>%</small>
-              </div>
-              <p className="lede">
-                từng nghe tới Hò Đồng Tháp. {awareness[1].value}% không chắc mình đã nghe hay chưa. Trong {priorKnowledge.n} bạn đã nghe hoặc không chắc,{' '}
-                {priorKnowledge.value}% {priorKnowledge.label}.
-              </p>
-              <div className="stack" style={{ gap: 0 }}>
-                <div className="stack-bar" role="img" aria-label="Đã từng nghe 25,5%, không chắc 36,3%, chưa từng nghe 38,2%">
-                  <div className="s-heard" style={{ flex: awareness[0].value }}>{awareness[0].value}%</div>
-                  <div className="s-unsure" style={{ flex: awareness[1].value }}>{awareness[1].value}%</div>
-                  <div className="s-never" style={{ flex: awareness[2].value }}>{awareness[2].value}%</div>
-                </div>
-                <div className="legend">
-                  <span><i style={{ background: 'var(--river-ink)' }} /> Đã từng nghe</span>
-                  <span><i style={{ background: 'var(--river)' }} /> Không chắc</span>
-                  <span><i style={{ background: 'var(--lotus-soft)', outline: '1px solid var(--lotus)' }} /> Chưa từng nghe</span>
-                </div>
-              </div>
-            </div>
-            <div className="stack" data-reveal>
-              <p className="eyebrow">Sau vài phút được nghe, được kể bối cảnh</p>
-              <div className="hbars">
-                {postExposure.map((p) => (
-                  <div className="hbar" key={p.label}>
-                    <div className="hbar-top">
-                      <span>{p.label}</span>
-                      <b>{p.value}%</b>
-                    </div>
-                    <div className="hbar-track">
-                      <div className="hbar-fill" style={{ width: `${p.value}%` }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <p className="note">
-                Đây là mức hiểu ngay sau trải nghiệm ngắn, chưa phải kết quả ghi nhớ lâu dài. Người ta có thể cần nhiều hơn một lần nghe: cần bối cảnh, sự kết nối
-                và cơ hội được đáp lời.
-              </p>
-              <Link to="/nghien-cuu" className="link-arrow">
-                Xem toàn bộ nghiên cứu <IconArrow />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Hành trình */}
-      <section className="section">
-        <div className="wrap">
-          <SectionHead
-            eyebrow="Hành trình trên web"
-            title={
-              <>
-                Nghe Hò, Hiểu Hò, <i>Cùng Hò</i>
-              </>
-            }
-            lede="Đi theo thứ tự hay nhảy thẳng tới phần bạn thích đều được. Mỗi bước mở ra một cách gặp gỡ khác với Hò."
-          />
-          <div className="journey">
-            <svg className="journey-line" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M120 60 C 260 20, 330 160, 500 110 S 760 220, 880 160" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 8" className="flowing" />
-            </svg>
-            {journey.map((j, i) => (
-              <TiltBox key={j.key} className="journey-step" data-reveal>
-                <Link to={j.to} style={{ position: 'absolute', inset: 0, borderRadius: 'inherit' }} aria-label={j.title} />
-                <span className="step-no">Bước {i + 1} / 3</span>
-                <h3>{j.title}</h3>
-                <p>{j.body}</p>
-                <span className="go">Bắt đầu →</span>
+          <div className="doors">
+            {doors.map((d) => (
+              <TiltBox key={d.to} className="door" data-reveal>
+                <Link to={d.to} style={{ position: 'absolute', inset: 0, borderRadius: 'inherit' }} aria-label={d.title} />
+                <i>{d.no}</i>
+                <b>{d.title}</b>
+                <span>{d.body}</span>
               </TiltBox>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Chiến dịch */}
+      {/* Bạn có biết */}
+      <section className="section alt">
+        <span className="vertical-note">Đồng Tháp Mười</span>
+        <div className="wrap">
+          <SectionHead
+            eyebrow="Hò Đồng Tháp trong một phút"
+            title={
+              <>
+                Bạn có <i>biết?</i>
+              </>
+            }
+            lede="Sáu điều ít người biết về điệu hò của vùng đất Sen Hồng. Chạm vào thẻ để lật."
+          />
+          <div className="flip-grid">
+            {facts.map((f, i) => (
+              <FlipCard key={f.front} fact={f} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Kim Nhụy */}
+      <section className="section">
+        <div className="wrap spotlight">
+          <div data-reveal>
+            <Record />
+          </div>
+          <div className="stack" data-reveal>
+            <p className="eyebrow">{kim.title}</p>
+            <p className="name-xl">Kim Nhụy</p>
+            <p className="lede">{kim.lead}</p>
+            <p style={{ color: 'var(--ink-2)', maxWidth: '58ch' }}>
+              Năm 1957, Đài Tiếng nói Việt Nam thu giọng hò của bà trên đĩa 45 vòng. Cuộn băng ấy sang tới Pháp, và GS Trần Văn Khê mang điệu hò đi giới thiệu ở hơn 60
+              quốc gia.
+            </p>
+            {kim.quote && (
+              <blockquote className="quote" style={{ margin: 0 }}>
+                {kim.quote.text}
+                <small>{kim.quote.by}</small>
+              </blockquote>
+            )}
+            <div className="row">
+              <Link to="/nghe-si/kim-nhuy" className="btn btn-primary">
+                Đọc chuyện đời bà <IconArrow />
+              </Link>
+            </div>
+            <Cite ids={['cand-hay-nhat', 'tuoitre-giong-ho', 'vov-nu-hoang']} />
+          </div>
+        </div>
+      </section>
+
+      <HoDivider />
+
+      {/* Câu hò */}
+      <section className="section">
+        <div className="wrap verse" data-reveal>
+          <p className="eyebrow">Một câu hò được nhắc lại</p>
+          <p className="verse-lines">
+            {verse.lines.map((l) => (
+              <span key={l}>{l}</span>
+            ))}
+          </p>
+          <p className="muted" style={{ maxWidth: '56ch' }}>
+            {verse.caption}
+          </p>
+          <Cite ids={[verse.source]} />
+          <Link to="/nghe-ho" className="link-arrow">
+            Nghe gì trong một câu hò <IconArrow />
+          </Link>
+        </div>
+      </section>
+
+      {/* Dòng thời gian rút gọn */}
       <section className="section alt">
         <div className="wrap">
           <SectionHead
-            eyebrow="Chiến dịch Hẹn Hò Đồng Tháp"
+            eyebrow="Hai thế kỷ của một điệu hò"
             title={
               <>
-                Một cuộc hẹn qua <i>ba giờ của dòng sông</i>
+                Sinh ra, lặng tiếng, rồi <i>hồi sinh</i>
               </>
             }
-            lede="Bấm từng chặng để thấy dòng sông trên đầu trang đổi màu: ban ngày gọi, chiều muộn tỏ lòng, đêm trăng gặp nhau ở bến nước."
           />
-          <div className="phase-strip" data-reveal>
-            {phases.map((p) => (
-              <button
-                key={p.id}
-                type="button"
-                className="phase-chip"
-                aria-pressed={mood === p.mood}
-                onClick={() => {
-                  setOverride(p.mood)
-                  window.scrollTo({ top: 0, behavior: 'smooth' })
-                }}
-              >
-                <span className={`swatch ${p.mood}`} />
-                <b>{p.name}</b>
-                <span>{p.purpose} · {p.when}</span>
-              </button>
+          <ol className="timeline">
+            {chapters.map((c) => (
+              <li key={c.id} data-reveal>
+                <span className="yr">{c.era}</span>
+                <span className="dot" aria-hidden="true">
+                  <i />
+                </span>
+                <div className="ev">
+                  <b>{c.title}</b>
+                  <p>{c.body[0]}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <Link to="/cau-chuyen" className="btn btn-primary">
+            Đọc trọn câu chuyện <IconArrow />
+          </Link>
+        </div>
+      </section>
+
+      {/* Người giữ tiếng hò */}
+      <section className="section">
+        <div className="wrap">
+          <SectionHead
+            eyebrow="Người giữ tiếng hò"
+            title={
+              <>
+                Những người đã <i>hò, giữ và trao lại</i>
+              </>
+            }
+          />
+          <div className="artist-grid">
+            {keepers.map((a) => (
+              <ArtistCard key={a.id} artist={a} />
             ))}
           </div>
-          <div className="row" style={{ marginTop: 22 }}>
-            <Link to="/hen-ho" className="link-arrow">
-              Câu chuyện chiến dịch <IconArrow />
+          <div className="row" style={{ marginTop: 32 }}>
+            <Link to="/nghe-si" className="link-arrow">
+              Xem tất cả nghệ sĩ <IconArrow />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Bước vào thư viện */}
+      {/* Sách báo */}
+      <section className="section alt">
+        <div className="wrap">
+          <SectionHead
+            eyebrow="Sách & Báo"
+            title={
+              <>
+                Báo chí viết gì về <i>Hò Đồng Tháp</i>
+              </>
+            }
+          />
+          <div className="source-grid">
+            {press.map((s) => (
+              <SourceCard key={s.id} source={s} />
+            ))}
+          </div>
+          <div className="row" style={{ marginTop: 28 }}>
+            <Link to="/sach-bao" className="link-arrow">
+              Toàn bộ {sources.length} bài báo và {books.length} cuốn sách <IconArrow />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Thử Hò */}
       <section className="section">
         <div className="wrap cta-band" data-reveal>
           <div className="stack">
-            <p className="eyebrow">Thư viện số</p>
+            <p className="eyebrow">Thử Hò</p>
             <h2>
-              Bước vào <i style={{ color: 'var(--lotus-ink)', fontWeight: 500 }}>thư viện</i>
+              Bạn hiểu Hò Đồng Tháp <i style={{ color: 'var(--lotus-ink)', fontWeight: 500 }}>đến đâu?</i>
             </h2>
-            <p className="lede">
-              Âm thanh, video, hình ảnh, phỏng vấn và tài liệu. Mỗi mục ghi rõ nguồn gốc và phân biệt tư liệu truyền thống với sáng tạo đương đại.
-            </p>
+            <p className="lede">Sáu câu hỏi, hai phút, và một cuộc hẹn nhỏ bên bến sông.</p>
           </div>
-          <Link to="/thu-vien" className="btn btn-primary">
-            Mở thư viện <IconArrow />
+          <Link to="/thu-ho" className="btn btn-primary">
+            Chơi thử <IconArrow />
           </Link>
         </div>
       </section>

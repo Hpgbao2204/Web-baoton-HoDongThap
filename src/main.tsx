@@ -4,11 +4,11 @@ import { HashRouter, Route, Routes } from 'react-router-dom'
 import './styles/global.css'
 import Layout from './components/Layout'
 import Home from './pages/Home'
-import Explore from './pages/Explore'
+import Story from './pages/Story'
+import Artists from './pages/Artists'
+import ArtistDetail from './pages/ArtistDetail'
 import Listen from './pages/Listen'
-import Keepers from './pages/Keepers'
-import Research from './pages/Research'
-import Library from './pages/Library'
+import Press from './pages/Press'
 import TryHo from './pages/TryHo'
 import Campaign from './pages/Campaign'
 import Team from './pages/Team'
@@ -21,14 +21,14 @@ createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="kham-pha" element={<Explore />} />
+          <Route path="cau-chuyen" element={<Story />} />
+          <Route path="nghe-si" element={<Artists />} />
+          <Route path="nghe-si/:id" element={<ArtistDetail />} />
           <Route path="nghe-ho" element={<Listen />} />
-          <Route path="nguoi-giu-tieng-ho" element={<Keepers />} />
-          <Route path="nghien-cuu" element={<Research />} />
-          <Route path="thu-vien" element={<Library />} />
+          <Route path="sach-bao" element={<Press />} />
           <Route path="thu-ho" element={<TryHo />} />
-          <Route path="hen-ho" element={<Campaign />} />
-          <Route path="nam-am" element={<Team />} />
+          <Route path="hoat-dong" element={<Campaign />} />
+          <Route path="ve-nam-am" element={<Team />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

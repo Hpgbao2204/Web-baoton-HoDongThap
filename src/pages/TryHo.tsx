@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import DateStage from '../components/DateStage'
-import { PageHead } from '../components/ui'
+import Quiz from '../components/Quiz'
+import { PageHead, SectionHead } from '../components/ui'
 import { IconArrow } from '../components/icons'
 import { themeMood, useTheme } from '../hooks/useTheme'
 import { useAmbient } from '../hooks/useAmbient'
@@ -88,29 +89,54 @@ export default function TryHo() {
         eyebrow="Cùng Hò"
         title={
           <>
-            Một cuộc hẹn <i>5 phút</i> với Hò
+            Chơi cùng <i>Hò Đồng Tháp</i>
           </>
         }
-        lede="Nghe một tiếng gọi, chọn bối cảnh, đoán ý người hò, rồi thử gửi lời đáp của bạn qua sông."
+        lede="Hai trò chơi nhỏ: một cuộc hẹn bên sông để hiểu bối cảnh của Hò, và sáu câu hỏi xem bạn đã biết Hò Đồng Tháp đến đâu."
       />
 
       <section className="section" style={{ paddingTop: 40 }}>
+        <div className="wrap">
+          <SectionHead
+            eyebrow="Trắc nghiệm"
+            title={
+              <>
+                Bạn hiểu Hò Đồng Tháp <i>đến đâu?</i>
+              </>
+            }
+          />
+          <Quiz />
+        </div>
+      </section>
+
+      <section className="section alt">
+        <div className="wrap">
+          <SectionHead
+            eyebrow="Cuộc hẹn bên sông"
+            title={
+              <>
+                Một cuộc hẹn <i>5 phút</i>
+              </>
+            }
+            lede="Nghe một tiếng hò, chọn bối cảnh, đoán ý người hò, rồi gửi lại tiếng lòng của bạn qua sông."
+          />
+        </div>
         <div className="wrap date-shell">
           <div className="stack">
             <div className="stage">
               <DateStage mood={mood} call={call} canRespond={step === 3 && !responded} onResponded={() => setResponded(true)} resetKey={resetKey} forceHold={keyHold} />
               <p className="stage-hint">
                 {step === 3 && !responded
-                  ? 'Nhấn giữ trên khung này để gửi lời đáp. Kéo lên xuống để đổi độ cao.'
+                  ? 'Nhấn giữ trên khung này để gửi tiếng lòng. Kéo lên xuống để đổi độ cao.'
                   : step === 3
-                    ? 'Lời đáp của bạn đã tới bờ bên kia.'
+                    ? 'Tiếng lòng của bạn đã tới bờ bên kia.'
                     : place
                       ? place.title
                       : 'Người hò trên xuồng · Bến nước bên kia sông'}
               </p>
             </div>
             <p className="note">
-              Đây là trải nghiệm minh hoạ để hiểu bối cảnh, chưa phải bài học hò. Bản ghi thật và phần hướng dẫn hò đáp sẽ được bổ sung sau khi nghệ nhân duyệt.
+              Đây là trò chơi minh hoạ bối cảnh, không phải bài học hò. Muốn học hò, hãy tìm tới các lớp truyền dạy của nghệ nhân ở Đồng Tháp.
             </p>
           </div>
 
@@ -138,7 +164,7 @@ export default function TryHo() {
                 </div>
                 {call >= 1 && (
                   <div className="feedback">
-                    Tiếng gọi đã vang sang bờ bên kia. Bản ghi giọng hò thật sẽ được gắn vào đây khi có tư liệu đã xác minh.
+                    Tiếng hò đã vang sang bờ bên kia. Muốn nghe giọng hò thật, ghé trang Nghe Hò để nghe bản thu của nghệ sĩ Kim Nhụy.
                   </div>
                 )}
                 <div className="step-actions">
@@ -204,10 +230,10 @@ export default function TryHo() {
 
             {step === 3 && (
               <div className="step-panel" key="s3">
-                <p className="eyebrow">Bước 4 · Đáp lời</p>
-                <h3>Gửi lời đáp của bạn qua sông</h3>
+                <p className="eyebrow">Bước 4 · Gửi tiếng lòng</p>
+                <h3>Gửi lại tiếng lòng của bạn qua sông</h3>
                 <p className="lede">
-                  Nhấn giữ trên khung sông nước cho tới khi đường đáp lời chạm tới người hò. Lên cao hay xuống thấp là tuỳ lòng bạn.
+                  Nhấn giữ trên khung sông nước cho tới khi đường của bạn chạm tới người hò. Lên cao hay xuống thấp là tuỳ lòng bạn, như giọng hò lúc cao lúc thấp.
                 </p>
                 <div className="step-actions">
                   <button
@@ -220,12 +246,12 @@ export default function TryHo() {
                     onPointerUp={() => setKeyHold(false)}
                     onPointerLeave={() => setKeyHold(false)}
                   >
-                    Giữ để đáp lời
+                    Giữ để gửi
                   </button>
                 </div>
                 {responded && (
                   <div className="feedback">
-                    Lời đáp đã tới. Trong Hò, có người cất tiếng thì có người lắng nghe và đáp lại. Chính mối quan hệ ấy làm nên không gian của Hò.
+                    Tiếng lòng của bạn đã tới. Hò Đồng Tháp được hò một mình, không có lối hò đối đáp. Người nghe không hò lại, mà đáp bằng sự lắng nghe, và tiếng hò nối người bờ này với người bờ kia.
                   </div>
                 )}
                 <div className="step-actions">
@@ -245,18 +271,18 @@ export default function TryHo() {
                 <div className="learn-card">
                   <p className="eyebrow">Tấm thẻ của bạn</p>
                   <p className="eq">
-                    <b>Hò</b> = tiếng nói + tình huống + mối quan hệ + không gian văn hoá
+                    <b>Hò Đồng Tháp</b> = một giọng hò + sông nước Tháp Mười + người lắng nghe
                   </p>
                   <p style={{ color: 'var(--ink-2)' }}>
-                    Bạn vừa nghe một tiếng gọi {place ? `${place.title.toLowerCase()}` : ''}, đoán ý người hò và gửi lại lời đáp. Đó cũng là cách Hò Đồng Tháp từng nối người với
-                    người ở Đồng Tháp Mười.
+                    Bạn vừa nghe một tiếng gọi {place ? `${place.title.toLowerCase()}` : ''}, đoán ý người hò và gửi lại tiếng lòng. Hơn hai trăm năm trước, những người khai hoang Đồng
+                    Tháp Mười cũng nghe nhau qua sông như thế.
                   </p>
                 </div>
                 <div className="step-actions">
-                  <Link to="/thu-vien" className="btn btn-primary">
-                    Vào thư viện <IconArrow />
+                  <Link to="/nghe-ho" className="btn btn-primary">
+                    Nghe giọng hò thật <IconArrow />
                   </Link>
-                  <Link to="/kham-pha" className="btn btn-ghost">
+                  <Link to="/cau-chuyen" className="btn btn-ghost">
                     Tìm hiểu thêm
                   </Link>
                   <button type="button" className="btn btn-ghost" onClick={restart}>

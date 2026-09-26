@@ -1,26 +1,40 @@
-import { useState } from 'react'
-import { ArchiveCard, ArchiveDrawer, AudioPlayer } from '../components/Archive'
+import { Link } from 'react-router-dom'
+import Record from '../components/Record'
+import { Cite } from '../components/cards'
 import { PageHead, SectionHead } from '../components/ui'
-import { archive, sampleArchive } from '../data/archive'
-import { statusLabels } from '../data/heritage'
-import type { ArchiveItem } from '../data/types'
+import { IconArrow } from '../components/icons'
+import { lullaby, traits, verse } from '../data/heritage'
+import { listenLinks } from '../data/sources'
 import { themeMood, useTheme } from '../hooks/useTheme'
 import { useReveal } from '../hooks/useMotion'
 
-const guide = [
-  { q: 'Tiếng mở câu', a: 'Chú ý cách người hò cất tiếng đầu tiên. Đây là điểm nhiều bạn trẻ nhớ nhất khi nghe lần đầu.' },
-  { q: 'Độ dài của câu', a: 'Một câu hò có thể kéo dài, ngân ra, chia thành nhiều khúc. Thử nghe hết một câu trước khi dừng.' },
-  { q: 'Cao và thấp', a: 'Giọng hò đi từ rất cao xuống rất thấp. Hãy để ý những chỗ chuyển giọng.' },
-  { q: 'Bối cảnh', a: 'Đọc chú thích: người hò đang ở đâu, làm gì, hò cho ai nghe. Cùng một câu hò, bối cảnh khác sẽ cho cảm giác khác.' },
-]
+/** Hình minh hoạ "dáng" một câu hò: rất dài, chia nhiều khúc, lúc rất cao lúc rất thấp. */
+function HoShape() {
+  return (
+    <div className="sor-wrap">
+      <svg className="ho-shape" viewBox="0 0 900 220" role="img" aria-label="Minh hoạ một câu hò dài chia nhiều khúc, lúc lên rất cao, lúc xuống rất thấp">
+        <line x1="0" y1="40" x2="900" y2="40" className="guide" />
+        <line x1="0" y1="180" x2="900" y2="180" className="guide" />
+        <text x="6" y="30" className="lbl">rất cao</text>
+        <text x="6" y="206" className="lbl">rất thấp</text>
+        <path
+          className="shape"
+          d="M20 120 C 60 120, 70 50, 120 48 S 190 60, 210 110 C 225 150, 250 170, 290 172 S 360 150, 380 120 M 410 110 C 440 90, 470 44, 520 44 S 590 70, 600 118 C 612 160, 640 178, 690 176 S 780 140, 800 118 S 860 104, 880 106"
+        />
+        {[{ x: 20, t: 'khúc 1' }, { x: 410, t: 'khúc 2' }, { x: 800, t: 'ngân dài' }].map((k) => (
+          <g key={k.t}>
+            <line x1={k.x} y1="60" x2={k.x} y2="200" className="tick" />
+            <text x={k.x + 6} y="214" className="lbl">{k.t}</text>
+          </g>
+        ))}
+      </svg>
+    </div>
+  )
+}
 
 export default function Listen() {
   const { theme } = useTheme()
   const root = useReveal<HTMLDivElement>()
-  const [open, setOpen] = useState<ArchiveItem | null>(null)
-  const real = archive.filter((a) => a.type === 'audio' || a.type === 'video')
-  const items = real.length ? real : sampleArchive.filter((a) => a.type === 'audio' || a.type === 'video' || a.type === 'interview')
-
   return (
     <div ref={root}>
       <PageHead
@@ -29,38 +43,35 @@ export default function Listen() {
         eyebrow="Nghe Hò"
         title={
           <>
-            Kho <i>tiếng Hò</i>
+            Nghe một câu hò <i>trăm năm</i>
           </>
         }
-        lede="Mỗi bản ghi đi kèm người hò, nơi ghi, lời hò, chú thích bối cảnh và người xác minh."
+        lede="Đeo tai nghe, chọn một bản thu, rồi đọc hướng dẫn bên dưới để biết mình đang nghe gì."
       />
 
       <section className="section" style={{ paddingTop: 48 }}>
-        <div className="wrap two-col" style={{ alignItems: 'start' }}>
-          <div className="stack" data-reveal>
-            <AudioPlayer item={real[0]} seed={7} />
-            {!real.length && (
-              <div className="empty">
-                <b>Chưa có bản ghi được công bố</b>
-                <p>
-                  Nhóm đang tập hợp bản ghi từ chuyến điền dã tại Đồng Tháp và các nguồn sưu tầm. Mỗi bản ghi chỉ lên web sau khi được cố vấn chuyên môn xác minh và có
-                  sự đồng ý của người hò.
-                </p>
-              </div>
-            )}
+        <div className="wrap spotlight">
+          <div data-reveal>
+            <Record />
           </div>
           <div className="stack" data-reveal>
-            <p className="eyebrow">Hướng dẫn nghe</p>
-            <h2 style={{ fontSize: 'clamp(1.8rem, 3.4vw, 2.4rem)' }}>Nghe gì trong một câu hò?</h2>
-            <dl className="prov" style={{ gridTemplateColumns: '140px minmax(0,1fr)' }}>
-              {guide.map((g) => (
-                <div key={g.q} style={{ display: 'contents' }}>
-                  <dt style={{ color: 'var(--lotus-ink)', fontWeight: 600, fontSize: '0.9rem' }}>{g.q}</dt>
-                  <dd style={{ color: 'var(--ink-2)' }}>{g.a}</dd>
-                </div>
+            <p className="eyebrow">Nghe ở đâu</p>
+            <h2 style={{ fontSize: 'clamp(1.9rem, 3.6vw, 2.6rem)' }}>Những bản thu có thể nghe ngay</h2>
+            <ul className="plain-list">
+              {listenLinks.map((l) => (
+                <li key={l.url}>
+                  <span>
+                    <a href={l.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--ink)', fontWeight: 600, textUnderlineOffset: 3 }}>
+                      {l.title}
+                    </a>
+                    <span className="muted"> · {l.where}</span>
+                    <br />
+                    <span style={{ fontSize: '0.88rem' }}>{l.note}</span>
+                  </span>
+                </li>
               ))}
-            </dl>
-            <p className="note">Hướng dẫn này sẽ được cố vấn chuyên môn chỉnh sửa và bổ sung.</p>
+            </ul>
+            <p className="note">Các liên kết mở trang gốc trong thẻ mới. Nam Âm không lưu trữ lại bản thu của đơn vị khác.</p>
           </div>
         </div>
       </section>
@@ -68,33 +79,57 @@ export default function Listen() {
       <section className="section alt">
         <div className="wrap">
           <SectionHead
-            eyebrow="Bản ghi & video"
+            eyebrow="Hướng dẫn nghe"
             title={
               <>
-                Tư liệu <i>âm thanh</i>
+                Nghe gì trong <i>một câu hò?</i>
               </>
             }
-            lede={
-              real.length
-                ? undefined
-                : 'Các thẻ dưới đây là mục mẫu, cho thấy mỗi tư liệu sẽ được trình bày thế nào. Bấm vào để xem bảng nguồn gốc.'
-            }
+            lede="Một câu Hò Đồng Tháp rất dài, được chia làm nhiều khúc. Giọng hò đi từ rất cao xuống rất thấp, lúc nhặt lúc khoan. Hình dưới đây chỉ minh hoạ dáng câu hò, không phải bản ký âm."
           />
-          <div className="legend" style={{ marginBottom: 22 }} data-reveal>
-            {(['traditional_reference', 'documented_practice', 'contemporary_interpretation', 'pending'] as const).map((s) => (
-              <span key={s} title={statusLabels[s].hint}>
-                <span className={`badge ${statusLabels[s].tone}`}>{statusLabels[s].label}</span>
-              </span>
-            ))}
+          <div data-reveal>
+            <HoShape />
           </div>
-          <div className="archive-grid">
-            {items.map((i) => (
-              <ArchiveCard key={i.id} item={i} onOpen={setOpen} />
+          <div className="trait-grid" style={{ marginTop: 36 }} data-reveal>
+            {traits.map((t) => (
+              <div className="trait" key={t.name}>
+                <b>{t.name}</b>
+                <p>{t.body}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
-      <ArchiveDrawer item={open} onClose={() => setOpen(null)} />
+
+      <section className="section">
+        <div className="wrap two-col">
+          <div className="verse" data-reveal>
+            <p className="eyebrow">Câu hò năm 1957</p>
+            <p className="verse-lines" style={{ fontSize: 'clamp(1.4rem, 2.6vw, 2rem)' }}>
+              {verse.lines.map((l) => (
+                <span key={l}>{l}</span>
+              ))}
+            </p>
+            <p className="muted">{verse.caption}</p>
+            <Cite ids={[verse.source]} />
+          </div>
+          <div className="verse" data-reveal>
+            <p className="eyebrow">Tiếng ru trong phim "Nổi gió"</p>
+            <p className="verse-lines" style={{ fontSize: 'clamp(1.4rem, 2.6vw, 2rem)' }}>
+              {lullaby.lines.map((l) => (
+                <span key={l}>{l}</span>
+              ))}
+            </p>
+            <p className="muted">{lullaby.caption}</p>
+            <Cite ids={[lullaby.source]} />
+          </div>
+        </div>
+        <div className="wrap" style={{ marginTop: 48 }}>
+          <Link to="/thu-ho" className="btn btn-primary">
+            Nghe xong rồi, thử Hò <IconArrow />
+          </Link>
+        </div>
+      </section>
     </div>
   )
 }

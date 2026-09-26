@@ -2069,3 +2069,6 @@ em.ho,
     scroll-behavior: auto !important;
   }
 }
+.journey-line path {
+  animation: flow 18s linear infinite;
+}

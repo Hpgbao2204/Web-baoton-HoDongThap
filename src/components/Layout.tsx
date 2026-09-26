@@ -25,8 +25,8 @@ export default function Layout() {
           <Link to="/" className="brand" aria-label={`${site.brand} — Trang chủ`}>
             <BrandMark />
             <span className="brand-text">
-              <b>Hẹn Hò</b>
-              <small>Đồng Tháp</small>
+              <b>Nam Âm</b>
+              <small>Tiếng hò Đồng Tháp</small>
             </span>
           </Link>
           <nav className={`main-nav ${open ? 'open' : ''}`} aria-label="Điều hướng chính">
@@ -69,13 +69,13 @@ export default function Layout() {
             <div className="stack">
               <p className="footer-tag">{site.tagline}</p>
               <p className="muted" style={{ maxWidth: '46ch', fontSize: '0.9rem' }}>
-                Dự án truyền thông của nhóm {site.team}, góp phần giúp người trẻ nghe, hiểu và có thêm cơ hội tham gia cùng Hò Đồng Tháp.
+                {site.brand}, {site.meaning.toLowerCase()}. Nơi người trẻ nghe, hiểu và thương thêm Hò Đồng Tháp, {site.heritage.label.toLowerCase()} từ năm 2018.
               </p>
             </div>
             <div>
               <h4>Khám phá</h4>
               <ul>
-                {nav.slice(0, 6).map((n) => (
+                {nav.slice(0, 5).map((n) => (
                   <li key={n.to}>
                     <Link to={n.to}>{n.label}</Link>
                   </li>
@@ -83,11 +83,11 @@ export default function Layout() {
               </ul>
             </div>
             <div>
-              <h4>Nhóm {site.team}</h4>
+              <h4>Nhóm {site.brand}</h4>
               <ul>
                 {team.map((m) => (
                   <li key={m.id}>
-                    <Link to="/nam-am">{m.name}</Link>
+                    <Link to="/ve-nam-am">{m.name}</Link>
                   </li>
                 ))}
               </ul>
@@ -95,9 +95,9 @@ export default function Layout() {
           </div>
           <div className="footer-bottom">
             <span>
-              © 2026 {site.team} · {site.brand}
+              © 2026 {site.brand} · {site.subject}
             </span>
-            <span>Nội dung văn hoá đang được cố vấn chuyên môn rà soát. Mục gắn nhãn "cần xác minh" chưa phải thông tin chính thức.</span>
+            <span>Thông tin tổng hợp từ sách báo, có dẫn nguồn. Nội dung chuyên môn được cố vấn rà soát.</span>
           </div>
         </div>
       </footer>

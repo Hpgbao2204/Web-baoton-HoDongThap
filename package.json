@@ -1,9 +1,9 @@
 {
-  "name": "hen-ho-dong-thap",
+  "name": "nam-am",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Hẹn Hò Đồng Tháp — thư viện số và trải nghiệm về Hò Đồng Tháp (nhóm Nam Âm)",
+  "description": "Nam Âm — web bảo tồn và lan toả Hò Đồng Tháp",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

@@ -158,9 +158,7 @@ export class RiverScene {
             float disc = smoothstep(0.99955, 0.99975, d);
             float halo = pow(d, 900.0) * 0.6 + pow(d, 60.0) * 0.28 + pow(d, 6.0) * 0.12;
             col += uGlow * halo * (1.0 - disc);
-            // mặt trăng có vài vệt mờ
-            float craters = uNight * disc * 0.08 * sin(dir.x * 900.0) * sin(dir.y * 700.0);
-            col = mix(col, uOrb - craters, disc);
+            col = mix(col, uOrb, disc);
             gl_FragColor = vec4(col, 1.0);
             #include <colorspace_fragment>
           }`,
@@ -320,7 +318,7 @@ export class RiverScene {
     for (let i = 0; i < pos.count; i++) {
       const x = pos.getX(i)
       const y = pos.getY(i) + h / 2 // 0..h
-      const t = y / h
+      const t = Math.min(1, Math.max(0, y / h))
       const narrow = 1 - Math.pow(t, 2.2) * 0.9
       const cup = (x / (w / 2)) ** 2 * 0.09 // lòng cánh hơi khum
       pos.setXYZ(i, x * narrow * (0.55 + Math.sin(t * Math.PI) * 0.6), y, cup + Math.pow(t, 2) * 0.12)
@@ -363,10 +361,10 @@ export class RiverScene {
 
     const r = rng(21)
     const spots: [number, number, 'flower' | 'pad' | 'bud'][] = [
-      [5.2, 1.2, 'flower'], [6.6, 0.2, 'pad'], [4.4, 2.4, 'pad'], [7.5, -1.8, 'flower'], [8.8, -0.6, 'pad'],
-      [3.4, -2.6, 'pad'], [9.6, -4.2, 'flower'], [6.0, -5.2, 'pad'], [11.5, -2.0, 'pad'], [2.6, 3.4, 'bud'],
+      [5.2, 1.2, 'flower'], [6.6, 0.2, 'pad'], [4.4, -0.8, 'pad'], [7.5, -1.8, 'flower'], [8.8, -0.6, 'pad'],
+      [3.4, -2.6, 'pad'], [9.6, -4.2, 'flower'], [6.0, -5.2, 'pad'], [11.5, -2.0, 'pad'], [2.2, -6.5, 'bud'],
       [-8.5, -3.0, 'pad'], [-10.4, -5.5, 'flower'], [-7.2, -7.0, 'pad'], [-12.0, -9.0, 'pad'], [12.8, -8.0, 'bud'],
-      [-4.6, 3.2, 'pad'], [14.0, -12.0, 'flower'], [-15.0, -14.0, 'pad'], [7.8, 2.8, 'bud'], [10.2, 1.4, 'pad'],
+      [-4.6, 1.2, 'pad'], [14.0, -12.0, 'flower'], [-15.0, -14.0, 'pad'], [10.8, -3.2, 'bud'], [10.2, 1.4, 'pad'],
     ]
     for (const [x, z, kind] of spots) {
       const grp = new THREE.Group()
@@ -465,7 +463,6 @@ export class RiverScene {
       new THREE.ShaderMaterial({
         transparent: true,
         depthWrite: false,
-        blending: THREE.AdditiveBlending,
         uniforms: { uTime: { value: 0 }, uColor: { value: new THREE.Color() }, uGlow: { value: new THREE.Color() } },
         vertexShader: /* glsl */ `
           varying vec2 vUv;

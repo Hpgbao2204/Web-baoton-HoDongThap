@@ -2072,3 +2072,27 @@ em.ho,
 .journey-line path {
   animation: flow 18s linear infinite;
 }
+.link-arrow svg {
+  width: 1em;
+  height: 1em;
+}
+.sound-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--river-ink);
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.sound-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+.sound-toggle:hover {
+  color: var(--lotus-ink);
+}

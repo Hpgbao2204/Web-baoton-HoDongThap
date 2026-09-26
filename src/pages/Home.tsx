@@ -49,8 +49,8 @@ export default function Home() {
               <span>
                 <b>{site.heritage.label}</b> · {site.heritage.date}
               </span>
-              <button type="button" className="link-arrow" style={{ background: 'none', border: 0, borderBottom: '1px solid', cursor: 'pointer', padding: 0 }} onClick={ambient.toggle} aria-pressed={ambient.playing}>
-                {ambient.playing ? <IconMute className="" /> : <IconWave className="" />}
+              <button type="button" className="sound-toggle" onClick={ambient.toggle} aria-pressed={ambient.playing}>
+                {ambient.playing ? <IconMute /> : <IconWave />}
                 {ambient.playing ? 'Tắt tiếng sông' : 'Bật tiếng sông nước'}
               </button>
             </div>
@@ -97,7 +97,7 @@ export default function Home() {
               Hò là thực hành bằng giọng. Mỗi bản ghi trên web sẽ đi kèm người hò, nơi ghi, lời hò và người xác minh, để bạn biết mình đang nghe gì.
             </p>
             <Link to="/nghe-ho" className="link-arrow">
-              Vào kho tiếng Hò <IconArrow className="" />
+              Vào kho tiếng Hò <IconArrow />
             </Link>
           </div>
           <div data-reveal>
@@ -160,7 +160,7 @@ export default function Home() {
                 và cơ hội được đáp lời.
               </p>
               <Link to="/nghien-cuu" className="link-arrow">
-                Xem toàn bộ nghiên cứu <IconArrow className="" />
+                Xem toàn bộ nghiên cứu <IconArrow />
               </Link>
             </div>
           </div>
@@ -228,7 +228,7 @@ export default function Home() {
           </div>
           <div className="row" style={{ marginTop: 22 }}>
             <Link to="/hen-ho" className="link-arrow">
-              Câu chuyện chiến dịch <IconArrow className="" />
+              Câu chuyện chiến dịch <IconArrow />
             </Link>
           </div>
         </div>

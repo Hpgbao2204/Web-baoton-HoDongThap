@@ -1,58 +1,69 @@
 /**
- * Kiểu dữ liệu dùng chung cho toàn bộ web.
- * Rút gọn từ mô hình dữ liệu trong tài liệu dự án (mục 25–27).
- * Khi có dữ liệu thật, chỉ cần điền vào các file trong src/data — giao diện tự hiển thị.
+ * Kiểu dữ liệu dùng chung cho toàn bộ web Nam Âm.
+ * Khi có dữ liệu mới, chỉ cần điền vào các file trong src/data — giao diện tự hiển thị.
  */
 
-/** Trạng thái nguồn gốc — phân biệt tư liệu truyền thống với sáng tạo đương đại. */
-export type HeritageStatus =
-  | 'verified_original'
-  | 'traditional_reference'
-  | 'documented_practice'
-  | 'contemporary_interpretation'
-  | 'contemporary_adaptation'
-  | 'pending'
-
-export type ArchiveType =
-  | 'audio'
-  | 'video'
-  | 'image'
-  | 'interview'
-  | 'document'
-  | 'research'
-  | 'story'
-
-export interface Provenance {
-  source?: string
-  collectedBy?: string
-  recordedAt?: string // ngày ghi, dạng YYYY-MM-DD
-  location?: string
-  verifiedBy?: string[]
-  rights?: string
-  consent?: string
-  /** Với bản đương đại: dựa trên tư liệu nào, thay đổi gì. */
-  basedOn?: string
-  creativeChanges?: string
-}
-
-export interface ArchiveItem {
+/** Một nguồn tham khảo: bài báo, sách, trang chính thức. */
+export interface Source {
   id: string
   title: string
-  type: ArchiveType
-  status: HeritageStatus
+  outlet: string
+  url?: string
+  year?: string
+  kind: 'bao' | 'sach' | 'chinh-thuc' | 'am-thanh'
   summary: string
-  performer?: string
-  durationSeconds?: number
-  audioUrl?: string
-  videoUrl?: string
-  imageUrl?: string
-  /** Lời hò — chỉ điền khi đã được nghệ nhân/cố vấn xác minh. */
-  lyrics?: string
-  context?: string
-  themes?: string[]
-  provenance: Provenance
-  /** true = mục mẫu minh hoạ bố cục, không phải tư liệu thật. */
-  sample?: boolean
+  /** Gắn với nghệ sĩ hay chủ đề nào (id trong artists.ts hoặc chủ đề tự do). */
+  tags: string[]
+}
+
+export interface ArtistEvent {
+  year: string
+  text: string
+}
+
+export interface Artist {
+  id: string
+  name: string
+  /** Danh xưng ngắn: "Nữ hoàng hò Đồng Tháp"… */
+  title: string
+  role: string
+  years?: string
+  hometown?: string
+  /** Một câu giới thiệu hiện trên thẻ. */
+  lead: string
+  /** Các đoạn tiểu sử. */
+  story: string[]
+  timeline?: ArtistEvent[]
+  /** Lời kể được báo chí thuật lại (không phải trích nguyên văn nếu `paraphrase`). */
+  quote?: { text: string; by: string; paraphrase?: boolean }
+  photo?: string
+  /** Nhóm để sắp xếp: huyền thoại, người truyền nghề, người phục hồi… */
+  group: 'huyen-thoai' | 'truyen-nghe' | 'phuc-hoi' | 'lan-toa' | 'nguon-coi'
+  featured?: boolean
+  toVerify?: string
+}
+
+export interface Chapter {
+  id: string
+  era: string
+  title: string
+  body: string[]
+  mood: 'day' | 'dusk' | 'night'
+  highlight?: string
+  sources?: string[]
+}
+
+export interface Fact {
+  front: string
+  back: string
+  source?: string
+}
+
+export interface QuizQuestion {
+  q: string
+  options: string[]
+  answer: number
+  explain: string
 }
 
 export interface Person {
@@ -63,23 +74,5 @@ export interface Person {
   bio?: string
   relationship?: string
   photo?: string
-  quote?: string
   verification?: string
-}
-
-export interface TimelineEvent {
-  year: string
-  title: string
-  body: string
-  source?: string
-  toVerify?: boolean
-}
-
-export interface Topic {
-  id: string
-  title: string
-  lead: string
-  body: string[]
-  /** Nhãn cho biết nội dung đã được xác minh chưa. */
-  toVerify?: boolean
 }

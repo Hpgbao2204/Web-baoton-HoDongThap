@@ -2096,3 +2096,64 @@ em.ho,
 .sound-toggle:hover {
   color: var(--lotus-ink);
 }
+
+/* Vùng cảnh 3D tự đổi bộ màu theo giờ của dòng sông, để chữ luôn đọc được
+   (ví dụ: xem "đêm trăng" khi web đang ở chế độ sáng). */
+.scope-light {
+  --bg: #f8f2f4;
+  --bg-2: #edf3f7;
+  --surface: #fffdfd;
+  --surface-2: #f3e9ed;
+  --ink: #1d2a3c;
+  --ink-2: #4a5669;
+  --ink-3: #7a8497;
+  --line: #e4d8de;
+  --line-2: #d3dfe8;
+  --lotus: #e0869f;
+  --lotus-soft: #f5dbe3;
+  --lotus-ink: #a8445f;
+  --river: #7ba5c6;
+  --river-soft: #d9e8f2;
+  --river-ink: #2c5a7c;
+  --trad: #2c5a7c;
+  --trad-bg: #dbe8f2;
+  --doc: #2f6f6a;
+  --doc-bg: #d9ece8;
+  --new: #a8445f;
+  --new-bg: #f6dde5;
+  --pending: #8a6a35;
+  --pending-bg: #f1e6d2;
+  --scrim: rgba(248, 242, 244, 0.92);
+  --glass: rgba(255, 253, 253, 0.72);
+  --shadow: 0 1px 2px rgba(29, 42, 60, 0.05), 0 12px 32px -12px rgba(44, 90, 124, 0.18);
+  color: var(--ink);
+}
+.scope-dark {
+  --bg: #0f1829;
+  --bg-2: #132036;
+  --surface: #18253c;
+  --surface-2: #1d2b45;
+  --ink: #eee8ee;
+  --ink-2: #b9c0cf;
+  --ink-3: #8891a5;
+  --line: #283754;
+  --line-2: #2c3d5c;
+  --lotus: #ef9fb6;
+  --lotus-soft: #3a2b43;
+  --lotus-ink: #f5b7c9;
+  --river: #8fbbdd;
+  --river-soft: #1c3150;
+  --river-ink: #aed2ee;
+  --trad: #aed2ee;
+  --trad-bg: #1c3150;
+  --doc: #9fd6cc;
+  --doc-bg: #173835;
+  --new: #f5b7c9;
+  --new-bg: #3a2b43;
+  --pending: #e6c98f;
+  --pending-bg: #3a3222;
+  --scrim: rgba(15, 24, 41, 0.9);
+  --glass: rgba(24, 37, 60, 0.72);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 16px 40px -16px rgba(0, 0, 0, 0.6);
+  color: var(--ink);
+}

@@ -21,15 +21,15 @@ function SorDiagram() {
   return (
     <div className="sor-wrap">
       <svg className="sor" viewBox="0 0 900 300" role="img" aria-label="Mô hình S–O–R: S1 tới O β 0,260; S2 tới O β 0,505; O tới R1 β 0,729">
-        <path className="edge" d="M230 72 C 300 72, 300 138, 360 138" strokeWidth={w(pv.H1)} />
-        <path className="edge" d="M230 228 C 300 228, 300 162, 360 162" strokeWidth={w(pv.H2)} />
-        <path className="edge" d="M580 150 L 660 150" strokeWidth={w(pv.H3)} />
-        <text className="beta" x="290" y="92">β = .260</text>
-        <text className="beta" x="290" y="218">β = .505</text>
-        <text className="beta" x="590" y="132">β = .729</text>
-        {node(10, 40, 220, 'S1 · Kể chuyện & trình bày', 'Narrative & Media Presentation')}
-        {node(10, 196, 220, 'S2 · Tương tác có hướng dẫn', 'Interactive & Guided Participation')}
-        <g className="node o" transform="translate(360 70)">
+        <path className="edge" d="M250 72 C 310 72, 310 138, 370 138" strokeWidth={w(pv.H1)} />
+        <path className="edge" d="M250 228 C 310 228, 310 162, 370 162" strokeWidth={w(pv.H2)} />
+        <path className="edge" d="M590 150 L 660 150" strokeWidth={w(pv.H3)} />
+        <text className="beta" x="300" y="92">β = .260</text>
+        <text className="beta" x="300" y="218">β = .505</text>
+        <text className="beta" x="594" y="132">β = .729</text>
+        {node(1, 40, 249, 'S1 · Kể chuyện & trình bày', 'Narrative & Media Presentation')}
+        {node(1, 196, 249, 'S2 · Tương tác có hướng dẫn', 'Interactive & Guided Participation')}
+        <g className="node o" transform="translate(370 70)">
           <rect width="220" height="160" rx="20" strokeWidth="1.2" />
           <text x="110" y="30" textAnchor="middle" fontSize="15" fontWeight="600">
             O · Phản hồi bên trong
@@ -42,7 +42,7 @@ function SorDiagram() {
           <rect x="18" y="108" width="184" height="36" rx="10" fill="var(--surface)" stroke="var(--line-2)" />
           <text x="110" y="131" textAnchor="middle" fontSize="13">O2 · Cộng hưởng cảm xúc</text>
         </g>
-        {node(660, 118, 220, 'R1 · Ý định tham gia', `R² = ${rSquared.R1.toFixed(3)}`, 'r')}
+        {node(660, 118, 236, 'R1 · Ý định tham gia', `R² = ${rSquared.R1.toFixed(3)}`, 'r')}
       </svg>
     </div>
   )

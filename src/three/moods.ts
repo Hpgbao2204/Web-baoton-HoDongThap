@@ -74,3 +74,8 @@ export const moods: Record<Mood, MoodPalette> = {
 export function toColor(hex: string) {
   return new THREE.Color(hex)
 }
+
+/** Bộ màu chữ/nền phù hợp với giờ của cảnh: đêm dùng bộ tối, ngày/chiều dùng bộ sáng. */
+export function scopeFor(mood: Mood) {
+  return mood === 'night' ? 'scope-dark' : 'scope-light'
+}

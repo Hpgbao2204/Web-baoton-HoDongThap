@@ -11,7 +11,7 @@ import { archive } from '../data/archive'
 import { themeMood, useTheme } from '../hooks/useTheme'
 import { useAmbient } from '../hooks/useAmbient'
 import { useReveal } from '../hooks/useMotion'
-import type { Mood } from '../three/moods'
+import { scopeFor, type Mood } from '../three/moods'
 
 export default function Home() {
   const { theme } = useTheme()
@@ -23,7 +23,7 @@ export default function Home() {
 
   return (
     <div ref={root}>
-      <section className="hero">
+      <section className={`hero ${scopeFor(mood)}`}>
         <RiverCanvas mood={mood} label="Chiếc xuồng trên sông Đồng Tháp Mười, một đường tiếng hò vang sang bờ bên kia" />
         <div className="wrap hero-inner">
           <div className="hero-title">

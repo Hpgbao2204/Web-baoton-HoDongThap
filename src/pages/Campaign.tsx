@@ -5,6 +5,7 @@ import { IconArrow } from '../components/icons'
 import { phases, story } from '../data/campaign'
 import { site } from '../data/site'
 import { useReveal } from '../hooks/useMotion'
+import { scopeFor } from '../three/moods'
 
 export default function Campaign() {
   const root = useReveal<HTMLDivElement>()
@@ -13,7 +14,7 @@ export default function Campaign() {
 
   return (
     <div ref={root}>
-      <section className="campaign-stage">
+      <section className={`campaign-stage ${scopeFor(phase.mood)}`}>
         <RiverCanvas mood={phase.mood} label={`Dòng sông lúc ${phase.when.toLowerCase()}`} />
         <div className="wrap">
           <p className="crumb">

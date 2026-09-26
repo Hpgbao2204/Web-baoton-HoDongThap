@@ -6,7 +6,7 @@ import { useTilt } from '../hooks/useMotion'
 import { useTheme } from '../hooks/useTheme'
 import RiverCanvas from './RiverCanvas'
 import { IconFlag } from './icons'
-import type { Mood } from '../three/moods'
+import { scopeFor, type Mood } from '../three/moods'
 
 export function StatusBadge({ status }: { status: HeritageStatus }) {
   const s = statusLabels[status]
@@ -59,7 +59,7 @@ export function PageHead({
   crumb: string
 }) {
   return (
-    <section className="page-head">
+    <section className={`page-head ${scopeFor(mood)}`}>
       <RiverCanvas mood={mood} singer={false} />
       <div className="wrap">
         <p className="crumb">
